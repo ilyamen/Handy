@@ -559,6 +559,33 @@ async triggerUpdateCheck() : Promise<Result<null, string>> {
     else return { status: "error", error: e  as any };
 }
 },
+async checkNiriStatus() : Promise<NiriStatus> {
+    return await TAURI_INVOKE("check_niri_status");
+},
+async installNiriShortcut(shortcutKey?: string | null) : Promise<Result<NiriStatus, string>> {
+    try {
+        return { status: "ok", data: await TAURI_INVOKE("install_niri_shortcut", { shortcutKey }) };
+    } catch (e) {
+        if(e instanceof Error) throw e;
+        else return { status: "error", error: e as any };
+    }
+},
+async getNpuStatus() : Promise<Result<NpuStatus, string>> {
+    try {
+        return { status: "ok", data: await TAURI_INVOKE("get_npu_status") };
+    } catch (e) {
+        if(e instanceof Error) throw e;
+        else return { status: "error", error: e as any };
+    }
+},
+async setNpuEnabled(enabled: boolean) : Promise<Result<NpuStatus, string>> {
+    try {
+        return { status: "ok", data: await TAURI_INVOKE("set_npu_enabled", { enabled }) };
+    } catch (e) {
+        if(e instanceof Error) throw e;
+        else return { status: "error", error: e as any };
+    }
+},
 async showMainWindowCommand() : Promise<Result<null, string>> {
     try {
     return { status: "ok", data: await TAURI_INVOKE("show_main_window_command") };
@@ -1500,6 +1527,9 @@ type __EventObj__<T> = {
 		? (payload?: T) => ReturnType<typeof TAURI_API_EVENT.emit>
 		: (payload: T) => ReturnType<typeof TAURI_API_EVENT.emit>;
 };
+
+export type NiriStatus = { is_niri: boolean; is_configured: boolean; config_path: string | null; shortcut: string | null };
+export type NpuStatus = { is_available: boolean; is_enabled: boolean; device_name: string; model_found: boolean; model_path: string | null };
 
 export type Result<T, E> =
 	| { status: "ok"; data: T }

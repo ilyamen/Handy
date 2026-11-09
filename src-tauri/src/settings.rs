@@ -616,10 +616,8 @@ fn default_overlay_position() -> OverlayPosition {
 }
 
 fn default_overlay_style() -> OverlayStyle {
-    // Linux hides the overlay by default; other platforms show the live overlay.
-    // Position is independent and only selects top vs. bottom placement.
     #[cfg(target_os = "linux")]
-    return OverlayStyle::None;
+    return OverlayStyle::Minimal;
     #[cfg(not(target_os = "linux"))]
     return OverlayStyle::Live;
 }
@@ -1334,6 +1332,18 @@ fn apply_settings_migrations(
             OverlayStyle::Live
         };
         updated = true;
+    }
+
+    #[cfg(target_os = "linux")]
+    {
+        if settings.overlay_style == OverlayStyle::None {
+            settings.overlay_style = OverlayStyle::Minimal;
+            updated = true;
+        }
+        if settings.paste_method == PasteMethod::None {
+            settings.paste_method = PasteMethod::Direct;
+            updated = true;
+        }
     }
 
     updated

@@ -28,7 +28,7 @@
 //! - `openvino`: the worker's OpenVINO engine.
 
 #[cfg(any(target_os = "linux", target_os = "windows"))]
-mod openvino;
+pub mod openvino;
 mod protocol;
 mod supervisor;
 mod worker;

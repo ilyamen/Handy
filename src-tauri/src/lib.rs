@@ -16,6 +16,8 @@ mod language_detection;
 mod llm_client;
 mod managers;
 mod memory;
+pub mod niri;
+pub mod npu;
 mod overlay;
 mod paste_tx;
 pub mod portable;
@@ -723,6 +725,10 @@ pub fn run(cli_args: CliArgs) {
             shortcut::handy_keys::stop_handy_keys_recording,
             secure_input::get_secure_input_status,
             secure_input::run_keyboard_diagnostic,
+            niri::check_niri_status,
+            niri::install_niri_shortcut,
+            npu::get_npu_status,
+            npu::set_npu_enabled,
             trigger_update_check,
             show_main_window_command,
             commands::cancel_operation,

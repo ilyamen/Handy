@@ -1,0 +1,4 @@
+# Local build: no Vulkan SDK (glslc) here, and the Radeon's VRAM stays free.
+# Native transcribe.cpp runs on CPU; the NPU goes through openvino-worker/.
+[env]
+TRANSCRIBE_CMAKE_ARGS = "-DTRANSCRIBE_VULKAN=OFF"

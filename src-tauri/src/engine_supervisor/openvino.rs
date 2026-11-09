@@ -75,7 +75,14 @@ pub(super) fn serve(mut output: File, requests: &Receiver<Incoming>) -> i32 {
 /// Library directories of the OpenVINO install named by `INTEL_OPENVINO_DIR`,
 /// for the parent to put on the worker's library path. Empty when unset.
 pub fn library_dirs() -> Vec<PathBuf> {
-    let Some(root) = std::env::var_os("INTEL_OPENVINO_DIR").map(PathBuf::from) else {
+    let root = std::env::var_os("INTEL_OPENVINO_DIR")
+        .map(PathBuf::from)
+        .or_else(|| {
+            let home = std::env::var_os("HOME")?;
+            let p = PathBuf::from(home).join("ai/ovgenai/rt");
+            p.is_dir().then_some(p)
+        });
+    let Some(root) = root else {
         return Vec::new();
     };
     let runtime = root.join("runtime");
@@ -179,7 +186,12 @@ fn model_dir(gguf: &Path) -> Result<PathBuf, String> {
     let names = [format!("{name}-int8-ov"), format!("{name}-ov")];
     let is_model = |dir: &Path| dir.join("openvino_encoder_model.xml").is_file();
 
-    if let Some(root) = std::env::var_os("HANDY_OPENVINO_MODELS").map(PathBuf::from) {
+    let search_roots = [
+        std::env::var_os("HANDY_OPENVINO_MODELS").map(PathBuf::from),
+        Some(PathBuf::from("/var/lib/ollama-models/asr/models/ov")),
+        std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".local/share/com.pais.handy/models/ov")),
+    ];
+    for root in search_roots.into_iter().flatten() {
         if let Some(dir) = names.iter().map(|n| root.join(n)).find(|d| is_model(d)) {
             return Ok(dir);
         }

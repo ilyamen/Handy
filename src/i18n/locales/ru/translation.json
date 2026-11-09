@@ -321,6 +321,17 @@
     "lockedWhileTranscribing": "Модель можно будет сменить, когда закончится расшифровка в Истории."
   },
   "settings": {
+    "hardware": {
+      "title": "Аппаратное ускорение (NPU)"
+    },
+    "niri": {
+      "title": "Интеграция с Niri Wayland",
+      "configuredDesc": "Глобальный вызов Handy привязан к композитору Niri (my-binds.kdl) через spawn \"handy\" \"--toggle-transcription\".",
+      "unconfiguredDesc": "В Niri Wayland глобальные хоткеи обрабатываются композитором. Нажмите кнопку ниже, чтобы автоматически зарегистрировать Ctrl+Space.",
+      "updateBtn": "Обновить бинд",
+      "installBtn": "Подключить Ctrl+Space",
+      "installedSuccess": "Сочетание Ctrl+Space успешно привязано в Niri и конфиг перезагружен!"
+    },
     "modelSettings": {
       "title": "Настройки {{model}}"
     },
@@ -487,6 +498,12 @@
         "gpuDevice": {
           "auto": "Авто"
         }
+      },
+      "npu": {
+        "title": "Ускорение на Intel NPU",
+        "description": "Использовать встроенный нейронный процессор Intel NPU (OpenVINO GenAI) для мгновенной расшифровки без нагрузки на CPU/GPU",
+        "modelReady": "Модель Whisper Large v3 Turbo INT8 оптимизирована для NPU",
+        "modelMissing": "Модель не найдена в /var/lib/ollama-models/asr/models/ov"
       },
       "startHidden": {
         "label": "Скрыть при запуске",

@@ -15,6 +15,8 @@ import { ModelSettingsCard } from "./ModelSettingsCard";
 import { PreferredLanguages } from "../PreferredLanguages";
 import { ChineseScriptSetting } from "../ChineseScript";
 import { isChinese } from "@/lib/utils/languageSuggestions";
+import { NiriShortcutCard } from "../NiriShortcutCard";
+import { NpuAcceleratorToggle } from "../NpuAcceleratorToggle";
 
 export const GeneralSettings: React.FC = () => {
   const { t } = useTranslation();
@@ -31,6 +33,10 @@ export const GeneralSettings: React.FC = () => {
         <ShortcutActivationSetting descriptionMode="tooltip" grouped={true} />
         {/* Cancel shortcut remains hidden on Linux because of dynamic shortcut instability. */}
         {!isLinux && <ShortcutInput shortcutId="cancel" grouped={true} />}
+      </SettingsGroup>
+      {isLinux && <NiriShortcutCard />}
+      <SettingsGroup title={t("settings.hardware.title", "Аппаратное ускорение (NPU)")}>
+        <NpuAcceleratorToggle descriptionMode="tooltip" grouped={true} />
       </SettingsGroup>
       <SettingsGroup title={t("settings.languages.title")}>
         <PreferredLanguages descriptionMode="tooltip" grouped={true} />

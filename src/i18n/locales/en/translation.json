@@ -321,6 +321,17 @@
     "lockedWhileTranscribing": "You can switch models once History finishes transcribing."
   },
   "settings": {
+    "hardware": {
+      "title": "Hardware Acceleration (NPU)"
+    },
+    "niri": {
+      "title": "Niri Wayland Integration",
+      "configuredDesc": "Handy global shortcut is active in Niri (my-binds.kdl) via spawn 'handy' '--toggle-transcription'.",
+      "unconfiguredDesc": "In Niri Wayland, global shortcuts are handled by the compositor. Click below to register Ctrl+Space automatically.",
+      "updateBtn": "Update Shortcut",
+      "installBtn": "Bind Ctrl+Space",
+      "installedSuccess": "Ctrl+Space shortcut successfully bound in Niri and configuration reloaded!"
+    },
     "modelSettings": {
       "title": "{{model}} Settings"
     },
@@ -487,6 +498,12 @@
         "gpuDevice": {
           "auto": "Auto"
         }
+      },
+      "npu": {
+        "title": "Intel NPU Acceleration",
+        "description": "Use on-chip Intel NPU neural processor (OpenVINO GenAI) for fast inference with zero CPU/GPU overhead",
+        "modelReady": "Whisper Large v3 Turbo INT8 model optimized for NPU",
+        "modelMissing": "Model not found in /var/lib/ollama-models/asr/models/ov"
       },
       "startHidden": {
         "label": "Start Hidden",
